@@ -13,16 +13,21 @@ const ERRORS = {
 /**
  * More convenient way to work with timeouts
  * @class
- * @param {number} timeout - number of milliseconds
+ * @param {Number} timeout - number of milliseconds
+ * @throws {TimeoutInitializationError}
  * @example
  * let timeout = new Timeout(1000); // 1 sec
- * timeout.start().catch(function(reason) {
+ * timeout.start().catch((reason) => {
  *     // timeout exceeded
  * });
  */
 class Timeout {
   constructor(timeout) {
-    this[TIMEOUT] = timeout;
+    if (!Number.isInteger(timeout) || timeout <= 0) {
+      const error = new Error('Timeout value must be a positive integer');
+      error.name = ERRORS.INITIALIZATION;
+      throw error;
+    }
 
     const finalize = () => {
       this[TIMEOUT] = undefined;
@@ -41,7 +46,6 @@ class Timeout {
         reject(reason);
       };
     });
-    this[PROMISE] = promise;
 
     /**
      * Additional way to catch error.
@@ -55,14 +59,8 @@ class Timeout {
      * });
      */
     this.catch = promise.catch.bind(promise);
-
-    if (timeout === undefined) {
-      this[RESOLVE]();
-    } else if (!Number.isInteger(timeout) || timeout <= 0) {
-      const error = new Error('Timeout value must be a positive integer');
-      error.name = ERRORS.INITIALIZATION;
-      this[REJECT](error);
-    }
+    this[TIMEOUT] = timeout;
+    this[PROMISE] = promise;
   }
 
   /**
