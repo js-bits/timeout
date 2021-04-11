@@ -16,7 +16,7 @@ Install with yarn:
 yarn add @js-bits/timeout -D
 ```
 
-Import when you need it:
+Import where you need it:
 
 ```javascript
 import Timeout from '@js-bits/timeout';
