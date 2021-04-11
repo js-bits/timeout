@@ -13,14 +13,41 @@ const ERRORS = {
  *     // timeout exceeded
  * });
  */
-const Timeout = function (timeout) {
-  let timeoutId;
-  let resolveTimeout;
-  let rejectTimeout;
-  const promise = new Promise((resolve, reject) => {
-    resolveTimeout = resolve;
-    rejectTimeout = reject;
-  });
+class Timeout {
+  constructor(timeout) {
+    this.timeout = timeout;
+    // this.timeoutId;
+    // this.resolveTimeout;
+    // this.rejectTimeout;
+    this.promise = new Promise((resolve, reject) => {
+      this.resolveTimeout = resolve;
+      this.rejectTimeout = reject;
+    });
+
+    /**
+     * Additional way to catch error.
+     * @example
+     * let timeout = new Timeout(2000); // 2 sec
+     * ...
+     * timeout.start();
+     * ...
+     * timeout.catch(function(reason) {
+     *     // timeout exceeded
+     * });
+     */
+    this.catch = this.promise.catch.bind(this.promise);
+
+    if (timeout === undefined) {
+      this.resolveTimeout();
+    } else if (!Number.isInteger(timeout) || timeout <= 0) {
+      const error = new Error('Timeout value must be a positive integer');
+
+      error.name = ERRORS.INITIALIZATION;
+      this.rejectTimeout(error);
+    } else {
+      // log.debug('created', timeout);
+    }
+  }
 
   /**
    * Starts timer.
@@ -31,56 +58,32 @@ const Timeout = function (timeout) {
    *     // timeout exceeded
    * });
    */
-  this.start = function () {
-    if (timeout && !timeoutId) {
-      timeoutId = setTimeout(() => {
+  start() {
+    if (this.timeout && !this.timeoutId) {
+      this.timeoutId = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
 
         error.name = ERRORS.TIMEOUT;
-        rejectTimeout(error);
-      }, timeout);
+        this.rejectTimeout(error);
+      }, this.timeout);
     }
-    return promise;
-  };
+    return this.promise;
+  }
 
   /**
    * Stops timer and resolves timeout promise.
    * @returns {Promise} - timeout promise
    */
-  this.stop = function () {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeout = undefined;
-      timeoutId = undefined;
-      resolveTimeout();
+  stop() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeout = undefined;
+      this.timeoutId = undefined;
+      this.resolveTimeout();
     }
-    return promise;
-  };
-
-  /**
-   * Additional way to catch error.
-   * @example
-   * let timeout = new Timeout(2000); // 2 sec
-   * ...
-   * timeout.start();
-   * ...
-   * timeout.catch(function(reason) {
-   *     // timeout exceeded
-   * });
-   */
-  this.catch = promise.catch.bind(promise);
-
-  if (timeout === undefined) {
-    resolveTimeout();
-  } else if (!Number.isInteger(timeout) || timeout <= 0) {
-    const error = new Error('Timeout value must be a positive integer');
-
-    error.name = ERRORS.INITIALIZATION;
-    rejectTimeout(error);
-  } else {
-    // log.debug('created', timeout);
+    return this.promise;
   }
-};
+}
 
 Timeout.ERRORS = ERRORS;
 
