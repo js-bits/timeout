@@ -74,8 +74,8 @@ class Timeout {
   stop() {
     if (this[ID]) {
       clearTimeout(this[ID]);
-      this[RESOLVE]();
     }
+    this[RESOLVE]();
     return this[PROMISE];
   }
 }

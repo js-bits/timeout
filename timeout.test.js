@@ -73,5 +73,10 @@ describe('Timeout', () => {
       jest.advanceTimersByTime(30000);
       return expect(promise).resolves.toBeUndefined();
     });
+    test('should resolve timeout immediately when called before timeout has started', async () => {
+      const timeout = new Timeout(30000);
+      const promise = timeout.stop();
+      return expect(promise).resolves.toBeUndefined();
+    });
   });
 });
