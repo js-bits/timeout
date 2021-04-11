@@ -96,6 +96,8 @@ const asyncAction = async delay =>
 
 ## Notes
 
-You cannot "pause" a timeout or "restart" it. Once it's started, there are only two possibilities: either the timeout can be manually stopped before it is exceeded or the timeout will be exceeded.
+- You cannot "pause" a timeout or "restart" it. Once it's started, there are only two possibilities: either the timeout can be manually stopped before it is exceeded or the timeout will be exceeded.
 
-It's possible to stop a timeout before it is even started but you won't be able to start that timeout ever again.
+- It's possible to stop a timeout before it is even started but you won't be able to start that timeout ever again.
+
+- Internet Explorer is not supported.
