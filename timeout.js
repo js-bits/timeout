@@ -1,3 +1,10 @@
+// private properties
+const TIMEOUT = Symbol('timeout');
+const PROMISE = Symbol('promise');
+const RESOLVE = Symbol('resolve');
+const REJECT = Symbol('reject');
+const ID = Symbol('timeoutId');
+
 const ERRORS = {
   TIMEOUT: 'TimeoutError',
   INITIALIZATION: 'TimeoutInitializationError',
@@ -15,14 +22,12 @@ const ERRORS = {
  */
 class Timeout {
   constructor(timeout) {
-    this.timeout = timeout;
-    // this.timeoutId;
-    // this.resolveTimeout;
-    // this.rejectTimeout;
-    this.promise = new Promise((resolve, reject) => {
-      this.resolveTimeout = resolve;
-      this.rejectTimeout = reject;
+    this[TIMEOUT] = timeout;
+    const promise = new Promise((resolve, reject) => {
+      this[RESOLVE] = resolve;
+      this[REJECT] = reject;
     });
+    this[PROMISE] = promise;
 
     /**
      * Additional way to catch error.
@@ -35,15 +40,15 @@ class Timeout {
      *     // timeout exceeded
      * });
      */
-    this.catch = this.promise.catch.bind(this.promise);
+    this.catch = promise.catch.bind(promise);
 
     if (timeout === undefined) {
-      this.resolveTimeout();
+      this[RESOLVE]();
     } else if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
 
       error.name = ERRORS.INITIALIZATION;
-      this.rejectTimeout(error);
+      this[REJECT](error);
     } else {
       // log.debug('created', timeout);
     }
@@ -59,15 +64,15 @@ class Timeout {
    * });
    */
   start() {
-    if (this.timeout && !this.timeoutId) {
-      this.timeoutId = setTimeout(() => {
+    if (this[TIMEOUT] && !this[ID]) {
+      this[ID] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
 
         error.name = ERRORS.TIMEOUT;
-        this.rejectTimeout(error);
-      }, this.timeout);
+        this[REJECT](error);
+      }, this[TIMEOUT]);
     }
-    return this.promise;
+    return this[PROMISE];
   }
 
   /**
@@ -75,13 +80,13 @@ class Timeout {
    * @returns {Promise} - timeout promise
    */
   stop() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-      this.timeout = undefined;
-      this.timeoutId = undefined;
-      this.resolveTimeout();
+    if (this[ID]) {
+      clearTimeout(this[ID]);
+      this[TIMEOUT] = undefined;
+      this[ID] = undefined;
+      this[RESOLVE]();
     }
-    return this.promise;
+    return this[PROMISE];
   }
 }
 
