@@ -37,7 +37,7 @@ timeout.start().catch(() => {
 Alternative approach:
 
 ```javascript
-const timeout = new Timeout(3000); // 3 sec
+const timeout = new Timeout(2000); // 2 sec
 
 timeout.catch(() => {
   console.log('Timeout exceeded');
@@ -51,13 +51,47 @@ timeout.start();
 Error handling:
 
 ```javascript
-const timeout = new Timeout(2000); // 2 sec
+const timeout = new Timeout(3000); // 3 sec
 
 timeout.start().catch(reason => {
   if (reason.name === Timeout.ERRORS.TIMEOUT_EXCEEDED) {
     console.log('Timeout exceeded error');
   }
 });
+```
+
+Actual usage:
+
+```javascript
+const timeout = new Timeout(1000); // 1 sec
+timeout.catch(() => {
+  // you can report the exceeded timeout here
+  console.log('Asynchronous operation timeout exceeded');
+});
+
+// fake async action
+const asyncAction = async delay =>
+  new Promise(resolve => {
+    setTimeout(resolve, delay);
+  });
+
+(async () => {
+  // at the beginning of the operation
+  timeout.start();
+
+  // perform some asynchronous actions which could potentially
+  // take more time than the specified timeout
+  const asyncActionPromise = asyncAction(2000); // 2 sec
+
+  timeout.catch(() => {
+    // you can also report the exceeded timeout or abort the operation here
+  });
+
+  await asyncActionPromise;
+
+  // when the operation is completed
+  timeout.stop();
+})();
 ```
 
 ## Notes
