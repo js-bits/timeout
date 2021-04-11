@@ -11,7 +11,7 @@ const ERRORS = {
 };
 
 /**
- * Convenient, promise-based way to work with timeouts
+ * Promise-based timeout
  * @class
  * @param {Number} timeout - number of milliseconds
  * @throws {TimeoutInitializationError}
@@ -43,7 +43,7 @@ class Timeout {
     });
 
     /**
-     * Alternative way to catch an error.
+     * An alternative way to catch errors
      * @param {Function} callback
      * @returns {Promise}
      */
@@ -53,7 +53,7 @@ class Timeout {
   }
 
   /**
-   * Starts timer.
+   * Initiates a timer for the specified timeout
    * @returns {Promise} - timeout promise
    */
   start() {
@@ -68,7 +68,7 @@ class Timeout {
   }
 
   /**
-   * Stops timer and resolves timeout promise.
+   * Stops the timer and resolves the timeout promise
    * @returns {Promise} - timeout promise
    */
   stop() {
