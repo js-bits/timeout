@@ -73,7 +73,7 @@ const Timeout = function (timeout) {
   if (timeout === undefined) {
     resolveTimeout();
   } else if (!Number.isInteger(timeout) || timeout <= 0) {
-    const error = new Error('Timeout value must be positive integer');
+    const error = new Error('Timeout value must be a positive integer');
 
     error.name = ERRORS.INITIALIZATION;
     rejectTimeout(error);
@@ -84,4 +84,4 @@ const Timeout = function (timeout) {
 
 Timeout.ERRORS = ERRORS;
 
-module.exports = Timeout;
+export default Timeout;
