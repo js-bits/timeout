@@ -55,6 +55,7 @@ class Timeout {
   /**
    * Initiates a timer for the specified timeout
    * @returns {Promise} - timeout promise
+   * @throws {TimeoutExceededError}
    */
   start() {
     if (this[TIMEOUT] && !this[ID]) {
