@@ -1,0 +1,31 @@
+{
+  "name": "@js-bits/timeout",
+  "version": "0.0.1",
+  "description": "MVC's Model reimagined",
+  "keywords": [
+    "javascript",
+    "timeout",
+    "promise"
+  ],
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test-coverage": "yarn test --coverage",
+    "test-watch": "yarn test --watch",
+    "lint": "eslint '**/*.{js,jsx}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/js-bits/timeout"
+  },
+  "author": "https://github.com/apolo-gh",
+  "license": "ISC",
+  "devDependencies": {
+    "@js-bits/formalinter": "^0.1.2",
+    "jest": "^26.6.3"
+  },
+  "prettier": "@js-bits/formalinter/.prettierrc.json",
+  "eslintConfig": {
+    "extends": "@js-bits/eslint-config/.eslintrc.json"
+  }
+}
