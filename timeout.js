@@ -6,7 +6,7 @@ const REJECT = Symbol('reject');
 const ID = Symbol('timeoutId');
 
 const ERRORS = {
-  TIMEOUT: 'TimeoutError',
+  TIMEOUT_EXCEEDED: 'TimeoutExceededError',
   INITIALIZATION: 'TimeoutInitializationError',
 };
 
@@ -76,7 +76,7 @@ class Timeout {
     if (this[TIMEOUT] && !this[ID]) {
       this[ID] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
-        error.name = ERRORS.TIMEOUT;
+        error.name = ERRORS.TIMEOUT_EXCEEDED;
         this[REJECT](error);
       }, this[TIMEOUT]);
     }

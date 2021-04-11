@@ -54,7 +54,7 @@ describe('Timeout', () => {
       const promise = timeout.start();
       jest.advanceTimersByTime(30000);
       return promise.catch(error => {
-        expect(error.name).toEqual('TimeoutError');
+        expect(error.name).toEqual('TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');
       });
     });
