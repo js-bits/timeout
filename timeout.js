@@ -23,9 +23,23 @@ const ERRORS = {
 class Timeout {
   constructor(timeout) {
     this[TIMEOUT] = timeout;
+
+    const finalize = () => {
+      this[TIMEOUT] = undefined;
+      this[ID] = undefined;
+      this[RESOLVE] = undefined;
+      this[REJECT] = undefined;
+    };
+
     const promise = new Promise((resolve, reject) => {
-      this[RESOLVE] = resolve;
-      this[REJECT] = reject;
+      this[RESOLVE] = value => {
+        finalize();
+        resolve(value);
+      };
+      this[REJECT] = reason => {
+        finalize();
+        reject(reason);
+      };
     });
     this[PROMISE] = promise;
 
@@ -46,11 +60,8 @@ class Timeout {
       this[RESOLVE]();
     } else if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
-
       error.name = ERRORS.INITIALIZATION;
       this[REJECT](error);
-    } else {
-      // log.debug('created', timeout);
     }
   }
 
@@ -67,7 +78,6 @@ class Timeout {
     if (this[TIMEOUT] && !this[ID]) {
       this[ID] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
-
         error.name = ERRORS.TIMEOUT;
         this[REJECT](error);
       }, this[TIMEOUT]);
@@ -82,8 +92,6 @@ class Timeout {
   stop() {
     if (this[ID]) {
       clearTimeout(this[ID]);
-      this[TIMEOUT] = undefined;
-      this[ID] = undefined;
       this[RESOLVE]();
     }
     return this[PROMISE];
