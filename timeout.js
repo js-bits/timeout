@@ -11,15 +11,10 @@ const ERRORS = {
 };
 
 /**
- * More convenient way to work with timeouts
+ * Convenient, promise-based way to work with timeouts
  * @class
  * @param {Number} timeout - number of milliseconds
  * @throws {TimeoutInitializationError}
- * @example
- * let timeout = new Timeout(1000); // 1 sec
- * timeout.start().catch((reason) => {
- *     // timeout exceeded
- * });
  */
 class Timeout {
   constructor(timeout) {
@@ -48,15 +43,9 @@ class Timeout {
     });
 
     /**
-     * Additional way to catch error.
-     * @example
-     * let timeout = new Timeout(2000); // 2 sec
-     * ...
-     * timeout.start();
-     * ...
-     * timeout.catch(function(reason) {
-     *     // timeout exceeded
-     * });
+     * Alternative way to catch an error.
+     * @param {Function} callback
+     * @returns {Promise}
      */
     this.catch = promise.catch.bind(promise);
     this[TIMEOUT] = timeout;
@@ -66,11 +55,6 @@ class Timeout {
   /**
    * Starts timer.
    * @returns {Promise} - timeout promise
-   * @example
-   * let timeout = new Timeout(2000); // 2 sec
-   * timeout.start().catch(function(reason) {
-   *     // timeout exceeded
-   * });
    */
   start() {
     if (this[TIMEOUT] && !this[ID]) {
