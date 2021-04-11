@@ -52,7 +52,9 @@ describe('Timeout', () => {
       expect.assertions(2);
       const timeout = new Timeout(30000);
       const promise = timeout.start();
-      jest.advanceTimersByTime(30000);
+      jest.advanceTimersByTime(15000);
+      timeout.start();
+      jest.advanceTimersByTime(15000);
       return promise.catch(error => {
         expect(error.name).toEqual('TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');
