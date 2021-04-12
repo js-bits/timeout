@@ -7,13 +7,13 @@ A convenient, promise-based way to work with timeouts. It's useful to track asyn
 Install with npm:
 
 ```
-npm install @js-bits/timeout -D
+npm install @js-bits/timeout
 ```
 
 Install with yarn:
 
 ```
-yarn add @js-bits/timeout -D
+yarn add @js-bits/timeout
 ```
 
 Import where you need it:
