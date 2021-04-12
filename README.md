@@ -64,6 +64,7 @@ Actual usage:
 
 ```javascript
 const timeout = new Timeout(1000); // 1 sec
+
 timeout.catch(() => {
   // you can report the exceeded timeout here
   console.log('Asynchronous operation timeout exceeded');
