@@ -54,7 +54,7 @@ Error handling:
 const timeout = new Timeout(3000); // 3 sec
 
 timeout.start().catch(reason => {
-  if (reason.name === Timeout.ERRORS.TIMEOUT_EXCEEDED) {
+  if (reason.name === Timeout.TimeoutExceededError) {
     console.log('Timeout exceeded error');
   }
 });

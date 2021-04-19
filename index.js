@@ -1,3 +1,5 @@
+import enumerate from '@js-bits/enumerate';
+
 // private properties
 const TIMEOUT = Symbol('timeout');
 const PROMISE = Symbol('promise');
@@ -5,13 +7,13 @@ const RESOLVE = Symbol('resolve');
 const REJECT = Symbol('reject');
 const ID = Symbol('timeoutId');
 
-const ERRORS = {
-  TIMEOUT_EXCEEDED: 'TimeoutExceededError',
-  INITIALIZATION: 'TimeoutInitializationError',
-};
+const ERRORS = enumerate(String)`
+  TimeoutExceededError
+  TimeoutInitializationError
+`;
 
 /**
- * Promise-based timeout
+ * Rejects a promise with an error if it does not settle within the specified timeout
  * @class
  * @param {Number} timeout - number of milliseconds
  * @throws {TimeoutInitializationError}
@@ -20,7 +22,7 @@ class Timeout {
   constructor(timeout) {
     if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
-      error.name = ERRORS.INITIALIZATION;
+      error.name = Timeout.TimeoutInitializationError;
       throw error;
     }
 
@@ -61,7 +63,7 @@ class Timeout {
     if (this[TIMEOUT] && !this[ID]) {
       this[ID] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
-        error.name = ERRORS.TIMEOUT_EXCEEDED;
+        error.name = Timeout.TimeoutExceededError;
         this[REJECT](error);
       }, this[TIMEOUT]);
     }
@@ -83,6 +85,6 @@ class Timeout {
   }
 }
 
-Timeout.ERRORS = ERRORS;
+Object.assign(Timeout, ERRORS);
 
 export default Timeout;
