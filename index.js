@@ -1,11 +1,15 @@
 import enumerate from '@js-bits/enumerate';
 
-// private properties
-const TIMEOUT = Symbol('timeout');
-const PROMISE = Symbol('promise');
-const RESOLVE = Symbol('resolve');
-const REJECT = Symbol('reject');
-const ID = Symbol('timeoutId');
+// pseudo-private properties emulation in order to avoid source code transpiling
+// TODO: replace with #privateField syntax when it gains wide support
+const ø = enumerate`
+  id
+  timeout
+  promise
+  resolve
+  reject
+  finalize
+`;
 
 const ERRORS = enumerate(String)`
   TimeoutExceededError
@@ -26,20 +30,13 @@ class Timeout {
       throw error;
     }
 
-    const finalize = () => {
-      this[TIMEOUT] = undefined;
-      this[ID] = undefined;
-      this[RESOLVE] = undefined;
-      this[REJECT] = undefined;
-    };
-
     const promise = new Promise((resolve, reject) => {
-      this[RESOLVE] = value => {
-        finalize();
+      this[ø.resolve] = value => {
+        this[ø.finalize]();
         resolve(value);
       };
-      this[REJECT] = reason => {
-        finalize();
+      this[ø.reject] = reason => {
+        this[ø.finalize]();
         reject(reason);
       };
     });
@@ -50,8 +47,8 @@ class Timeout {
      * @returns {Promise}
      */
     this.catch = promise.catch.bind(promise);
-    this[TIMEOUT] = timeout;
-    this[PROMISE] = promise;
+    this[ø.timeout] = timeout;
+    this[ø.promise] = promise;
   }
 
   /**
@@ -60,14 +57,14 @@ class Timeout {
    * @throws {TimeoutExceededError}
    */
   start() {
-    if (this[TIMEOUT] && !this[ID]) {
-      this[ID] = setTimeout(() => {
+    if (this[ø.timeout] && !this[ø.id]) {
+      this[ø.id] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
         error.name = Timeout.TimeoutExceededError;
-        this[REJECT](error);
-      }, this[TIMEOUT]);
+        this[ø.reject](error);
+      }, this[ø.timeout]);
     }
-    return this[PROMISE];
+    return this[ø.promise];
   }
 
   /**
@@ -75,13 +72,20 @@ class Timeout {
    * @returns {Promise} - timeout promise
    */
   stop() {
-    if (this[ID]) {
-      clearTimeout(this[ID]);
+    if (this[ø.id]) {
+      clearTimeout(this[ø.id]);
     }
-    if (this[RESOLVE]) {
-      this[RESOLVE]();
+    if (this[ø.resolve]) {
+      this[ø.resolve]();
     }
-    return this[PROMISE];
+    return this[ø.promise];
+  }
+
+  [ø.finalize]() {
+    this[ø.timeout] = undefined;
+    this[ø.id] = undefined;
+    this[ø.resolve] = undefined;
+    this[ø.reject] = undefined;
   }
 }
 
