@@ -12,7 +12,7 @@
   "module": "./index.js",
   "exports": "./index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "test-coverage": "yarn test --coverage",
     "test-watch": "yarn test --watch",
     "lint": "eslint '**/*.{js,jsx}'"
@@ -37,5 +37,17 @@
   },
   "dependencies": {
     "@js-bits/enumerate": "^0.1.2"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "node",
+        "testEnvironment": "node"
+      },
+      {
+        "displayName": "jsdom",
+        "testEnvironment": "jsdom"
+      }
+    ]
   }
 }

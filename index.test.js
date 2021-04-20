@@ -1,6 +1,8 @@
 import { jest } from '@jest/globals';
 import Timeout from './index.js';
 
+const env = typeof window === 'undefined' ? 'node' : 'jsdom';
+
 jest.useFakeTimers('modern');
 
 const expectInitError = callback => {
@@ -12,7 +14,7 @@ const expectInitError = callback => {
   }
 };
 
-describe('Timeout', () => {
+describe(`Timeout: \u001b[1;36m[${env}]`, () => {
   describe('#constructor', () => {
     test('should throw TimeoutInitializationError when timeout is undefined', () => {
       expect.assertions(2);
