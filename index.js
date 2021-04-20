@@ -17,7 +17,7 @@ const ERRORS = enumerate(String)`
 `;
 
 /**
- * Rejects a promise with an error if it does not settle within the specified timeout
+ * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
  * @param {Number} timeout - number of milliseconds
  * @throws {TimeoutInitializationError}
@@ -56,7 +56,7 @@ class Timeout {
    * @returns {Promise} - timeout promise
    * @throws {TimeoutExceededError}
    */
-  start() {
+  set() {
     if (this[ø.timeout] && !this[ø.id]) {
       this[ø.id] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
@@ -68,10 +68,10 @@ class Timeout {
   }
 
   /**
-   * Stops the timer and resolves the timeout promise
+   * Clears the timeout and resolves the timeout promise
    * @returns {Promise} - timeout promise
    */
-  stop() {
+  clear() {
     if (this[ø.id]) {
       clearTimeout(this[ø.id]);
     }

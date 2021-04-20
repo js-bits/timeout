@@ -43,19 +43,19 @@ describe(`Timeout: \u001b[1;36m[${env}]`, () => {
     });
   });
 
-  describe('#start', () => {
+  describe('#set', () => {
     test('should return a timeout promise', async () => {
       const timeout = new Timeout(1);
-      const promise = timeout.start();
+      const promise = timeout.set();
       jest.clearAllTimers();
       return expect(promise).toBeInstanceOf(Promise);
     });
-    test('should start a timer and reject when operation timeout exceeded', async () => {
+    test('should set a timer and reject when operation timeout exceeded', async () => {
       expect.assertions(2);
       const timeout = new Timeout(30000);
-      const promise = timeout.start();
+      const promise = timeout.set();
       jest.advanceTimersByTime(15000);
-      timeout.start();
+      timeout.set();
       jest.advanceTimersByTime(15000);
       return promise.catch(error => {
         expect(error.name).toEqual('TimeoutExceededError');
@@ -64,29 +64,29 @@ describe(`Timeout: \u001b[1;36m[${env}]`, () => {
     });
   });
 
-  describe('#stop', () => {
+  describe('#clear', () => {
     test('should return a timeout promise', async () => {
       const timeout = new Timeout(30000);
-      return expect(timeout.stop()).toBeInstanceOf(Promise);
+      return expect(timeout.clear()).toBeInstanceOf(Promise);
     });
-    test('should stop the timer and resolve timeout immediately', async () => {
+    test('should clear the timer and resolve timeout immediately', async () => {
       const timeout = new Timeout(30000);
-      const promise = timeout.start();
+      const promise = timeout.set();
       jest.advanceTimersByTime(1000);
-      timeout.stop();
+      timeout.clear();
       jest.advanceTimersByTime(30000);
       return expect(promise).resolves.toBeUndefined();
     });
-    test('should resolve timeout immediately when called before timeout has started', async () => {
+    test('should resolve timeout immediately when called before timeout has seted', async () => {
       const timeout = new Timeout(30000);
-      const promise = timeout.stop();
+      const promise = timeout.clear();
       return expect(promise).resolves.toBeUndefined();
     });
     test('should just return the rejected promise when operation timeout exceeded', async () => {
       const timeout = new Timeout(30000);
-      const promise = timeout.start();
+      const promise = timeout.set();
       jest.advanceTimersByTime(40000);
-      timeout.stop();
+      timeout.clear();
       return promise.catch(error => {
         expect(error.name).toEqual('TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');

@@ -29,7 +29,7 @@ Basic approach:
 ```javascript
 const timeout = new Timeout(1000); // 1 sec
 
-timeout.start().catch(() => {
+timeout.set().catch(() => {
   console.log('Timeout exceeded');
 });
 ```
@@ -45,7 +45,7 @@ timeout.catch(() => {
 
 ...
 
-timeout.start();
+timeout.set();
 ```
 
 Error handling:
@@ -53,7 +53,7 @@ Error handling:
 ```javascript
 const timeout = new Timeout(3000); // 3 sec
 
-timeout.start().catch(reason => {
+timeout.set().catch(reason => {
   if (reason.name === Timeout.TimeoutExceededError) {
     console.log('Timeout exceeded error');
   }
@@ -78,7 +78,7 @@ const asyncAction = async delay =>
 
 (async () => {
   // at the beginning of the operation
-  timeout.start();
+  timeout.set();
 
   // perform some asynchronous actions which could potentially
   // take more time than the specified timeout
@@ -91,14 +91,14 @@ const asyncAction = async delay =>
   await asyncActionPromise;
 
   // when the operation is completed
-  timeout.stop();
+  timeout.clear();
 })();
 ```
 
 ## Notes
 
-- You cannot "pause" a timeout or "restart" it. Once it's started, there are only two possibilities: either the timeout can be manually stopped before it is exceeded or the timeout will be exceeded.
+- You cannot "pause" a timeout or "reset" it. Once it's set, there are only two possibilities: either the timeout can be manually cleared before it is exceeded or the timeout will be exceeded.
 
-- It's possible to stop a timeout before it is even started but you won't be able to start that timeout ever again.
+- It's possible to clear a timeout before it is even set up but you won't be able to set that timeout up ever again.
 
 - Internet Explorer is not supported.
