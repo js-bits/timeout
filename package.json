@@ -5,6 +5,7 @@
   "keywords": [
     "javascript",
     "timeout",
+    "latency",
     "promise"
   ],
   "type": "module",
