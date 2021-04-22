@@ -10,7 +10,7 @@ const expectInitError = callback => {
   try {
     callback();
   } catch (error) {
-    expect(error.name).toEqual('TimeoutInitializationError');
+    expect(error.name).toEqual(Timeout.TimeoutInitializationError);
     expect(error.message).toEqual('Timeout value must be a positive integer');
   }
 };
