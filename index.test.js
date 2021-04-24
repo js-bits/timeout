@@ -85,10 +85,10 @@ describe(`Timeout: ${env}`, () => {
     });
     test('should just return the rejected promise when operation timeout exceeded', async () => {
       const timeout = new Timeout(30000);
-      const promise = timeout.set();
+      timeout.set();
       jest.advanceTimersByTime(40000);
       timeout.clear();
-      return promise.catch(error => {
+      return timeout.catch(error => {
         expect(error.name).toEqual('TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');
       });
