@@ -21,6 +21,7 @@ const ERRORS = enumerate(String)`
  * @class
  * @param {Number} timeout - number of milliseconds
  * @throws {TimeoutInitializationError}
+ * @throws {TimeoutExceededError}
  */
 class Timeout {
   constructor(timeout) {
@@ -41,12 +42,6 @@ class Timeout {
       };
     });
 
-    /**
-     * An alternative way to catch errors
-     * @param {Function} callback
-     * @returns {Promise}
-     */
-    this.catch = promise.catch.bind(promise);
     this[ø.timeout] = timeout;
     this[ø.promise] = promise;
   }
@@ -79,6 +74,15 @@ class Timeout {
       this[ø.resolve]();
     }
     return this[ø.promise];
+  }
+
+  /**
+   * An alternative way to catch errors
+   * @param {Function} callback
+   * @returns {Promise}
+   */
+  catch(...args) {
+    return this[ø.promise].catch(...args);
   }
 
   [ø.finalize]() {
