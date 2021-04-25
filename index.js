@@ -1,13 +1,10 @@
 import enumerate from '@js-bits/enumerate';
+import ExtendablePromise from '@js-bits/xpromise';
 
 // pseudo-private properties emulation in order to avoid source code transpiling
 // TODO: replace with #privateField syntax when it gains wide support
 const ø = enumerate`
   id
-  timeout
-  promise
-  resolve
-  reject
   finalize
 `;
 
@@ -23,7 +20,7 @@ const ERRORS = enumerate(String)`
  * @throws {TimeoutInitializationError}
  * @throws {TimeoutExceededError}
  */
-class Timeout {
+class Timeout extends ExtendablePromise {
   constructor(timeout) {
     if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
@@ -31,19 +28,18 @@ class Timeout {
       throw error;
     }
 
-    const promise = new Promise((resolve, reject) => {
-      this[ø.resolve] = value => {
-        this[ø.finalize]();
-        resolve(value);
-      };
-      this[ø.reject] = reason => {
-        this[ø.finalize]();
-        reject(reason);
-      };
+    super((resolve, reject) => {
+      this[ø.id] = setTimeout(() => {
+        const error = new Error('Operation timeout exceeded');
+        error.name = Timeout.TimeoutExceededError;
+        reject(error);
+      }, timeout);
     });
+  }
 
-    this[ø.timeout] = timeout;
-    this[ø.promise] = promise;
+  // eslint-disable-next-line class-methods-use-this
+  get [Symbol.toStringTag]() {
+    return 'Timeout';
   }
 
   /**
@@ -52,14 +48,12 @@ class Timeout {
    * @throws {TimeoutExceededError}
    */
   set() {
-    if (this[ø.timeout] && !this[ø.id]) {
-      this[ø.id] = setTimeout(() => {
-        const error = new Error('Operation timeout exceeded');
-        error.name = Timeout.TimeoutExceededError;
-        this[ø.reject](error);
-      }, this[ø.timeout]);
+    if (!this[ø.id]) {
+      this.execute().finally(() => {
+        this[ø.finalize]();
+      });
     }
-    return this[ø.promise];
+    return this;
   }
 
   /**
@@ -70,26 +64,12 @@ class Timeout {
     if (this[ø.id]) {
       clearTimeout(this[ø.id]);
     }
-    if (this[ø.resolve]) {
-      this[ø.resolve]();
-    }
-    return this[ø.promise];
-  }
-
-  /**
-   * An alternative way to catch errors
-   * @param {Function} callback
-   * @returns {Promise}
-   */
-  catch(...args) {
-    return this[ø.promise].catch(...args);
+    this.resolve();
+    return this;
   }
 
   [ø.finalize]() {
-    this[ø.timeout] = undefined;
     this[ø.id] = undefined;
-    this[ø.resolve] = undefined;
-    this[ø.reject] = undefined;
   }
 }
 
