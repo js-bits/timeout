@@ -101,4 +101,13 @@ describe(`Timeout: ${env}`, () => {
       });
     });
   });
+
+  test('Promise.race()', async () => {
+    expect.assertions(1);
+    const timeout = new Timeout(10);
+    timeout.set();
+    const promise1 = new Promise(() => {});
+    jest.advanceTimersByTime(100);
+    await expect(Promise.race([timeout, promise1])).rejects.toThrow('Operation timeout exceeded');
+  });
 });
