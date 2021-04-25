@@ -42,6 +42,13 @@ describe(`Timeout: ${env}`, () => {
         new Timeout(-12345);
       });
     });
+
+    test('should create an extended instance of Promise', () => {
+      const timeout = new Timeout(1);
+      expect(timeout).toBeInstanceOf(Promise);
+      expect(timeout).toBeInstanceOf(Timeout);
+      expect(String(timeout)).toEqual('[object Timeout]');
+    });
   });
 
   describe('#set', () => {
