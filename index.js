@@ -5,7 +5,6 @@ import ExtendablePromise from '@js-bits/xpromise';
 // TODO: replace with #privateField syntax when it gains wide support
 const ø = enumerate`
   id
-  finalize
 `;
 
 const ERRORS = enumerate(String)`
@@ -28,7 +27,7 @@ class Timeout extends ExtendablePromise {
       throw error;
     }
 
-    super((resolve, reject) => {
+    super((...[, reject]) => {
       this[ø.id] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
         error.name = Timeout.TimeoutExceededError;
@@ -49,9 +48,7 @@ class Timeout extends ExtendablePromise {
    */
   set() {
     if (!this[ø.id]) {
-      this.execute().finally(() => {
-        this[ø.finalize]();
-      });
+      this.execute();
     }
     return this;
   }
@@ -66,10 +63,6 @@ class Timeout extends ExtendablePromise {
     }
     this.resolve();
     return this;
-  }
-
-  [ø.finalize]() {
-    this[ø.id] = undefined;
   }
 }
 
