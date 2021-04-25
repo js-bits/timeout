@@ -43,7 +43,7 @@ timeout.catch(() => {
   console.log('Timeout exceeded');
 });
 
-...
+// ...
 
 timeout.set();
 ```
@@ -70,7 +70,7 @@ timeout.catch(() => {
   console.log('Asynchronous operation timeout exceeded');
 });
 
-// fake async action
+// fake async operation
 const asyncAction = async delay =>
   new Promise(resolve => {
     setTimeout(resolve, delay);
