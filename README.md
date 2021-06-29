@@ -1,6 +1,6 @@
 # Promise-based timeout
 
-A convenient, promise-based way to work with timeouts. It's useful to track asynchronous operations (AJAX requests for instance) latency.
+A convenient, promise-based way to work with timeouts. It's useful to track asynchronous operations (HTTP requests for instance) latency.
 
 ## Installation
 
@@ -98,7 +98,6 @@ const asyncAction = async delay =>
 ## Notes
 
 - You cannot "pause" a timeout or "reset" it. Once it's set, there are only two possibilities: either the timeout can be manually cleared before it is exceeded or the timeout will be exceeded.
-
 - It's possible to clear a timeout before it is even set up but you won't be able to set that timeout up ever again.
-
+- Requires [ECMAScript modules](https://nodejs.org/api/esm.html) to be enabled in Node.js environment. Otherwise, compile into a CommonJS module.
 - Internet Explorer is not supported.
