@@ -1,8 +1,5 @@
 import { jest } from '@jest/globals';
-import { cyan } from '@js-bits/log-in-color';
 import Timeout from './index.js';
-
-const env = cyan(`[${typeof window === 'undefined' ? 'node' : 'jsdom'}]`);
 
 jest.useFakeTimers('modern');
 
@@ -15,7 +12,7 @@ const expectInitError = callback => {
   }
 };
 
-describe(`Timeout: ${env}`, () => {
+describe(`Timeout`, () => {
   describe('#constructor', () => {
     test('should throw TimeoutInitializationError when timeout is undefined', () => {
       expect.assertions(2);
