@@ -37,7 +37,7 @@
     "extends": "@js-bits/eslint-config/.eslintrc.json"
   },
   "dependencies": {
-    "@js-bits/enumerate": "^0.4.0",
+    "@js-bits/enumerate": "^0.5.1",
     "@js-bits/xpromise": "^0.0.2"
   },
   "jest": {
