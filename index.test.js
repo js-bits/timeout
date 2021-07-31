@@ -1,5 +1,7 @@
 import { jest } from '@jest/globals';
 import Timeout from './index.js';
+// import Timeout from './dist/index.cjs';
+// const Timeout = require('./dist/index.cjs');
 
 jest.useFakeTimers('modern');
 
