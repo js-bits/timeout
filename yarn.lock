@@ -529,11 +529,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@js-bits/enumerate@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@js-bits/enumerate/-/enumerate-0.4.0.tgz#6e5af7f909522e47380cc22e71f268598346dd8d"
-  integrity sha512-kEXnNGc0coECcU/+t1Qr08wG8hI9qXw2dpxdu8aH4dr9KUoQ9DFMl4QlCQBeezvkmvLivyONh3zjl6U8WfcBiw==
-
 "@js-bits/enumerate@^0.5.1":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@js-bits/enumerate/-/enumerate-0.5.1.tgz#d01e4821ace3af452bf971ac5ee289374d500bbb"
@@ -567,12 +562,12 @@
   resolved "https://registry.yarnpkg.com/@js-bits/log-in-color/-/log-in-color-0.0.2.tgz#f5e370d5978d7977dbef375b2f66f18b4e564a32"
   integrity sha512-ojDTAqbgW8m24GXUIIKvRUXfusZqzKF4ANIWJMSmvTJB+V8dgbtE3mytJh6oBGhu8HZ1nCJFeNjKQzNV6rAx4g==
 
-"@js-bits/xpromise@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@js-bits/xpromise/-/xpromise-0.0.2.tgz#532af52146692cb9d2ded9f2c83fac482fc01022"
-  integrity sha512-rFohmsPEmE851G2aRFczCKflf4jBsW1YZHW0F99Kev0174YjS+uYGPlJzBu5WBqmxxwNpiIrui0e01tC/N964g==
+"@js-bits/xpromise@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@js-bits/xpromise/-/xpromise-0.2.1.tgz#688fa55478a888c08aeef598a71af9798c19b150"
+  integrity sha512-UR3iA5D1g6dRDr1X7hi9koLPIfpFh0poCV1fgQZZtcYbpGMjB930ggDP6mwqv3UdE8pDxWWnJPHXCM0uUEEieQ==
   dependencies:
-    "@js-bits/enumerate" "^0.4.0"
+    "@js-bits/enumerate" "^0.5.1"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
