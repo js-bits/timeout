@@ -3,23 +3,18 @@
 var enumerate = require('@js-bits/enumerate');
 var ExtendablePromise = require('@js-bits/xpromise');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var enumerate__default = /*#__PURE__*/_interopDefaultLegacy(enumerate);
-var ExtendablePromise__default = /*#__PURE__*/_interopDefaultLegacy(ExtendablePromise);
-
 // pseudo-private properties emulation in order to avoid source code transpiling
 // TODO: replace with #privateField syntax when it gains wide support
-const ø = enumerate__default['default'].ts(`
+const ø = enumerate.ts(`
   id
 `);
 
-const ERRORS = enumerate__default['default'].ts(
+const ERRORS = enumerate.ts(
   `
   InitializationError
   TimeoutExceededError
 `,
-  enumerate__default['default'].Prefix('Timeout|')
+  enumerate.Prefix('Timeout|')
 );
 
 /**
@@ -28,7 +23,7 @@ const ERRORS = enumerate__default['default'].ts(
  * @param {Number} timeout - number of milliseconds
  * @extends {ExtendablePromise<undefined>}
  */
-class Timeout extends ExtendablePromise__default['default'] {
+class Timeout extends ExtendablePromise {
   /**
    * @type {'Timeout|InitializationError'}
    * @readonly
