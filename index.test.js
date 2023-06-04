@@ -6,7 +6,7 @@ import Timeout from './index.js';
 
 jest.useFakeTimers();
 
-const expectInitError = callback => {
+const expectInitError = (/** @type {() => void} */ callback) => {
   try {
     callback();
   } catch (error) {

@@ -10,9 +10,9 @@ var ExtendablePromise__default = /*#__PURE__*/_interopDefaultLegacy(ExtendablePr
 
 // pseudo-private properties emulation in order to avoid source code transpiling
 // TODO: replace with #privateField syntax when it gains wide support
-const ø = enumerate__default['default']`
+const ø = enumerate__default['default'].ts(`
   id
-`;
+`);
 
 const ERRORS = enumerate__default['default'].ts(
   `
@@ -55,7 +55,7 @@ class Timeout extends ExtendablePromise__default['default'] {
     }
 
     super((...[, reject]) => {
-      this[ø.id] = setTimeout(() => {
+      this[ø.id] = /** @type {number} */ setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
         error.name = ERRORS.TimeoutExceededError;
         reject(error);

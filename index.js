@@ -3,9 +3,9 @@ import ExtendablePromise from '@js-bits/xpromise';
 
 // pseudo-private properties emulation in order to avoid source code transpiling
 // TODO: replace with #privateField syntax when it gains wide support
-const ø = enumerate`
+const ø = enumerate.ts(`
   id
-`;
+`);
 
 const ERRORS = enumerate.ts(
   `
@@ -48,7 +48,7 @@ class Timeout extends ExtendablePromise {
     }
 
     super((...[, reject]) => {
-      this[ø.id] = setTimeout(() => {
+      this[ø.id] = /** @type {number} */ setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
         error.name = ERRORS.TimeoutExceededError;
         reject(error);
