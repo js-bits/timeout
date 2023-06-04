@@ -8,36 +8,58 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var enumerate__default = /*#__PURE__*/_interopDefaultLegacy(enumerate);
 var ExtendablePromise__default = /*#__PURE__*/_interopDefaultLegacy(ExtendablePromise);
 
+// @ts-check
+
 // pseudo-private properties emulation in order to avoid source code transpiling
 // TODO: replace with #privateField syntax when it gains wide support
 const ø = enumerate__default['default']`
   id
 `;
 
-const ERRORS = enumerate__default['default'](String)`
+const ERRORS = enumerate__default['default'].ts(
+  `
+  InitializationError
   TimeoutExceededError
-  TimeoutInitializationError
-`;
+`,
+  enumerate__default['default'].Prefix('Timeout|')
+);
 
 /**
  * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
  * @param {Number} timeout - number of milliseconds
- * @throws {TimeoutInitializationError}
- * @throws {TimeoutExceededError}
+ * @extends {ExtendablePromise<undefined>}
  */
 class Timeout extends ExtendablePromise__default['default'] {
+  /**
+   * @type {'Timeout|InitializationError'}
+   * @readonly
+   */
+  static InitializationError = ERRORS.InitializationError;
+
+  /**
+   * @type {'Timeout|TimeoutExceededError'}
+   * @readonly
+   */
+  static TimeoutExceededError = ERRORS.TimeoutExceededError;
+
+  /**
+   *
+   * @param {number} timeout
+   * @throws {typeof Timeout.InitializationError}
+   * @throws {typeof Timeout.TimeoutExceededError}
+   */
   constructor(timeout) {
     if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
-      error.name = Timeout.TimeoutInitializationError;
+      error.name = ERRORS.InitializationError;
       throw error;
     }
 
     super((...[, reject]) => {
       this[ø.id] = setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
-        error.name = Timeout.TimeoutExceededError;
+        error.name = ERRORS.TimeoutExceededError;
         reject(error);
       }, timeout);
     });
@@ -50,8 +72,8 @@ class Timeout extends ExtendablePromise__default['default'] {
 
   /**
    * Initiates a timer for the specified timeout
-   * @returns {Promise} - timeout promise
-   * @throws {TimeoutExceededError}
+   * @returns {Timeout} - timeout promise
+   * @throws {typeof Timeout.TimeoutExceededError}
    */
   set() {
     if (!this[ø.id]) {
@@ -62,7 +84,7 @@ class Timeout extends ExtendablePromise__default['default'] {
 
   /**
    * Clears the timeout and resolves the timeout promise
-   * @returns {Promise} - timeout promise
+   * @returns {Timeout} - timeout promise
    */
   clear() {
     if (this[ø.id]) {
@@ -72,7 +94,5 @@ class Timeout extends ExtendablePromise__default['default'] {
     return this;
   }
 }
-
-Object.assign(Timeout, ERRORS);
 
 module.exports = Timeout;
