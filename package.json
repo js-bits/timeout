@@ -4,6 +4,7 @@
   "description": "Promise-based timeout",
   "keywords": [
     "javascript",
+    "typescript",
     "timeout",
     "latency",
     "promise"
