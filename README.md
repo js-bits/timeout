@@ -105,4 +105,3 @@ const asyncAction = async delay =>
 
 - You cannot "pause" a timeout or "reset" it. Once it's set, there are only two possibilities: either the timeout can be manually cleared before it is exceeded or the timeout will be exceeded.
 - It's possible to clear a timeout before it is even set up but you won't be able to set that timeout up ever again.
-- Internet Explorer is not supported.

@@ -1,24 +1,26 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { jest } from '@jest/globals';
 import Timeout from './index.js';
 // import Timeout from './dist/index.cjs';
 // const Timeout = require('./dist/index.cjs');
 
-jest.useFakeTimers('modern');
+jest.useFakeTimers();
 
 const expectInitError = callback => {
   try {
     callback();
   } catch (error) {
-    expect(error.name).toEqual(Timeout.TimeoutInitializationError);
+    expect(error.name).toEqual(Timeout.InitializationError);
     expect(error.message).toEqual('Timeout value must be a positive integer');
   }
 };
 
-describe(`Timeout`, () => {
+describe('Timeout', () => {
   describe('#constructor', () => {
     test('should throw TimeoutInitializationError when timeout is undefined', () => {
       expect.assertions(2);
       expectInitError(() => {
+        // @ts-expect-error Expected 1 arguments, but got 0
         new Timeout();
       });
     });
@@ -32,6 +34,7 @@ describe(`Timeout`, () => {
     test('should throw TimeoutInitializationError when timeout is a number', async () => {
       expect.assertions(2);
       expectInitError(() => {
+        // @ts-expect-error Argument of type 'string' is not assignable to parameter of type 'number'.
         new Timeout('3000');
       });
     });
@@ -65,7 +68,7 @@ describe(`Timeout`, () => {
       timeout.set();
       jest.advanceTimersByTime(15000);
       return promise.catch(error => {
-        expect(error.name).toEqual('TimeoutExceededError');
+        expect(error.name).toEqual('Timeout|TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');
       });
     });
@@ -95,7 +98,7 @@ describe(`Timeout`, () => {
       jest.advanceTimersByTime(40000);
       timeout.clear();
       return timeout.catch(error => {
-        expect(error.name).toEqual('TimeoutExceededError');
+        expect(error.name).toEqual('Timeout|TimeoutExceededError');
         expect(error.message).toEqual('Operation timeout exceeded');
       });
     });
