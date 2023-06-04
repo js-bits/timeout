@@ -35,7 +35,7 @@
   "author": "https://github.com/apolo-gh",
   "license": "ISC",
   "devDependencies": {
-    "@js-bits/formalinter": "^0.1.2",
+    "@js-bits/formalinter": "^1.0.3",
     "@js-bits/log-in-color": "^0.0.2",
     "@types/jest": "^26.0.22",
     "husky": "^7.0.1",
@@ -50,8 +50,8 @@
     "extends": "@js-bits/eslint-config/.eslintrc.json"
   },
   "dependencies": {
-    "@js-bits/enumerate": "^0.5.1",
-    "@js-bits/xpromise": "^0.2.1"
+    "@js-bits/enumerate": "^1.0.9",
+    "@js-bits/xpromise": "^1.0.0"
   },
   "jest": {
     "projects": [
