@@ -2,7 +2,6 @@ export default Timeout;
 /**
  * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
- * @param {Number} timeout - number of milliseconds
  * @extends {ExtendablePromise<undefined>}
  */
 declare class Timeout extends ExtendablePromise<undefined> {
@@ -17,8 +16,8 @@ declare class Timeout extends ExtendablePromise<undefined> {
      */
     static readonly TimeoutExceededError: 'Timeout|TimeoutExceededError';
     /**
-     *
-     * @param {number} timeout
+     * Creates new `Timeout` instance.
+     * @param {number} timeout - number of milliseconds
      * @throws {typeof Timeout.InitializationError}
      * @throws {typeof Timeout.TimeoutExceededError}
      */

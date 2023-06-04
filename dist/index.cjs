@@ -20,7 +20,6 @@ const ERRORS = enumerate.ts(
 /**
  * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
- * @param {Number} timeout - number of milliseconds
  * @extends {ExtendablePromise<undefined>}
  */
 class Timeout extends ExtendablePromise {
@@ -37,8 +36,8 @@ class Timeout extends ExtendablePromise {
   static TimeoutExceededError = ERRORS.TimeoutExceededError;
 
   /**
-   *
-   * @param {number} timeout
+   * Creates new `Timeout` instance.
+   * @param {number} timeout - number of milliseconds
    * @throws {typeof Timeout.InitializationError}
    * @throws {typeof Timeout.TimeoutExceededError}
    */
