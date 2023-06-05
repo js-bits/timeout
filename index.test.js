@@ -54,11 +54,14 @@ describe('Timeout', () => {
   });
 
   describe('#set', () => {
-    test('should return a timeout promise', async () => {
+    test('should return a timeout promise', () => {
+      expect.assertions(3);
       const timeout = new Timeout(1);
       const promise = timeout.set();
       jest.clearAllTimers();
-      return expect(promise).toBeInstanceOf(Promise);
+      expect(promise).toBeInstanceOf(Promise);
+      expect(promise).toBeInstanceOf(Timeout);
+      expect(promise).toBe(timeout);
     });
     test('should set a timer and reject when operation timeout exceeded', async () => {
       expect.assertions(2);
@@ -75,9 +78,13 @@ describe('Timeout', () => {
   });
 
   describe('#clear', () => {
-    test('should return a timeout promise', async () => {
+    test('should return a timeout promise', () => {
+      expect.assertions(3);
       const timeout = new Timeout(30000);
-      return expect(timeout.clear()).toBeInstanceOf(Promise);
+      jest.clearAllTimers();
+      expect(timeout.clear()).toBeInstanceOf(Promise);
+      expect(timeout.clear()).toBeInstanceOf(Timeout);
+      expect(timeout.clear()).toBe(timeout);
     });
     test('should clear the timer and resolve timeout immediately', async () => {
       const timeout = new Timeout(30000);

@@ -24,14 +24,14 @@ declare class Timeout extends ExtendablePromise<undefined> {
     constructor(timeout: number);
     /**
      * Initiates a timer for the specified timeout
-     * @returns {Timeout} - timeout promise
+     * @returns {this} - timeout promise
      * @throws {typeof Timeout.TimeoutExceededError}
      */
-    set(): Timeout;
+    set(): this;
     /**
      * Clears the timeout and resolves the timeout promise
-     * @returns {Timeout} - timeout promise
+     * @returns {this} - timeout promise
      */
-    clear(): Timeout;
+    clear(): this;
 }
 import ExtendablePromise from "@js-bits/xpromise";

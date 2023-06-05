@@ -64,7 +64,7 @@ class Timeout extends ExtendablePromise {
 
   /**
    * Initiates a timer for the specified timeout
-   * @returns {Timeout} - timeout promise
+   * @returns {this} - timeout promise
    * @throws {typeof Timeout.TimeoutExceededError}
    */
   set() {
@@ -76,7 +76,7 @@ class Timeout extends ExtendablePromise {
 
   /**
    * Clears the timeout and resolves the timeout promise
-   * @returns {Timeout} - timeout promise
+   * @returns {this} - timeout promise
    */
   clear() {
     if (this[ø.id]) {
