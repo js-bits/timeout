@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@js-bits/enumerate": "^1.0.10",
-    "@js-bits/xpromise": "^1.0.3"
+    "@js-bits/xpromise": "^1.0.4"
   },
   "jest": {
     "projects": [

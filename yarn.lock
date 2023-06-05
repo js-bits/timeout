@@ -769,10 +769,10 @@
   resolved "https://registry.yarnpkg.com/@js-bits/typedef-utils/-/typedef-utils-1.0.4.tgz#8505fb70f07982abdfcc7bf5acae2ea8fe131a59"
   integrity sha512-/2KaKjrtBNM9Q3iHYG3+8FjgG9VETvnqs4IRNlG4XPWur/G9C4A4CvtCJxiIQcbXaMc9dniCrbh3bM3XUntM/A==
 
-"@js-bits/xpromise@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@js-bits/xpromise/-/xpromise-1.0.3.tgz#f34206e1757a0d86cace574009dba66a8e417c87"
-  integrity sha512-eJqxSLZh/VpNDwoDfusrqHBgVjLXzHTLRFHvBmGU+Rs/Jv/UEp6xwTH9dMxEdU+oBJLsJERpvBgDPFg5xqzWVg==
+"@js-bits/xpromise@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@js-bits/xpromise/-/xpromise-1.0.4.tgz#aa93e9fd3bc329a4880a808dec1e535f32ce0326"
+  integrity sha512-oBo8G1ePvZXBTffhTfHQdeYON/0LKOCh7tXvpeWN58/uYBcDa+LTk9ATeJ1oVOfcfkp8arso9T9YPDJw1rI/nA==
   dependencies:
     "@js-bits/enumerate" "^1.0.10"
 
