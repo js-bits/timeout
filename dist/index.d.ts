@@ -33,5 +33,8 @@ declare class Timeout extends ExtendablePromise<undefined> {
      * @returns {this} - timeout promise
      */
     clear(): this;
+    [UniqueSymbols.UNIQUE_SYMBOL0]: NodeJS.Timeout;
 }
 import ExtendablePromise from "@js-bits/xpromise";
+
+import * as UniqueSymbols from '@js-bits/enumerate/types/unique-symbols';

@@ -731,6 +731,13 @@
   dependencies:
     "@js-bits/typedef-utils" "^1.0.4"
 
+"@js-bits/enumerate@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@js-bits/enumerate/-/enumerate-1.0.14.tgz#5f7c6ca157a100c2e95a740e99429be99ff40259"
+  integrity sha512-F2jXaPeStJXVw69PpPCVmik2JxpapJPxEFEyoa6SCSKSmj+CM344fSnbeT9q3d8/rA/CkMqcu8In7CZseuYerA==
+  dependencies:
+    "@js-bits/typedef-utils" "^1.0.4"
+
 "@js-bits/eslint-config@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@js-bits/eslint-config/-/eslint-config-1.0.3.tgz#cfd341f6f016528838a987ea7c008e7936e75593"
