@@ -1,6 +1,6 @@
 {
   "name": "@js-bits/timeout",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Promise-based timeout",
   "keywords": [
     "javascript",
