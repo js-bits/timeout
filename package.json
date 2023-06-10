@@ -26,7 +26,7 @@
     "test-cjs": "jest --verbose",
     "test-coverage": "yarn test --coverage",
     "test-watch": "yarn test --watch",
-    "lint": "tsc --noEmit && eslint '**/*.{js,jsx}'",
+    "lint": "tsc --noEmit && eslint '**/*.{js,jsx,ts,tsx}'",
     "prepare": "husky install"
   },
   "repository": {
@@ -37,7 +37,7 @@
   "license": "ISC",
   "dependencies": {
     "@js-bits/enumerate": "^1.0.17",
-    "@js-bits/xpromise": "^1.0.8"
+    "@js-bits/xpromise": "^1.0.10"
   },
   "devDependencies": {
     "@js-bits/formalinter": "^1.0.3",

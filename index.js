@@ -22,18 +22,6 @@ const ERRORS = enumerate.ts(
  */
 class Timeout extends ExtendablePromise {
   /**
-   * @type {'Timeout|InitializationError'}
-   * @readonly
-   */
-  static InitializationError = ERRORS.InitializationError;
-
-  /**
-   * @type {'Timeout|TimeoutExceededError'}
-   * @readonly
-   */
-  static TimeoutExceededError = ERRORS.TimeoutExceededError;
-
-  /**
    * Creates new `Timeout` instance.
    * @param {number} timeout - number of milliseconds
    * @throws {typeof Timeout.InitializationError}
@@ -84,5 +72,9 @@ class Timeout extends ExtendablePromise {
     return this;
   }
 }
+
+// Assigning properties one by one helps typescript to declare the namespace properly
+Timeout.InitializationError = ERRORS.InitializationError;
+Timeout.TimeoutExceededError = ERRORS.TimeoutExceededError;
 
 export default Timeout;
