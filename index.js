@@ -67,11 +67,6 @@ class Timeout extends ExtendablePromise {
   }
 }
 
-/**
- * Remove prefix for typescript to make error names overridable
- * @type {import("@js-bits/enumerate/types/types").EnumType<"InitializationError TimeoutExceededError", StringConstructor>}
- */
-// @ts-expect-error ts(2322)
 const ERRORS = enumerate.ts(
   `
   InitializationError
