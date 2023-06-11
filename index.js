@@ -72,7 +72,7 @@ const ERRORS = enumerate.ts(
   InitializationError
   TimeoutExceededError
 `,
-  enumerate.Prefix(`${Timeout.name}|`)
+  `${Timeout.name}|`
 );
 
 // Assigning properties one by one helps typescript to declare the namespace properly

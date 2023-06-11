@@ -37,7 +37,7 @@
   "license": "ISC",
   "dependencies": {
     "@js-bits/enumerate": "^1.0.17",
-    "@js-bits/xpromise": "^1.0.13"
+    "@js-bits/xpromise": "^1.0.14"
   },
   "devDependencies": {
     "@js-bits/formalinter": "^1.0.3",
