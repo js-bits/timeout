@@ -7,14 +7,6 @@ const ø = enumerate.ts(`
   id
 `);
 
-const ERRORS = enumerate.ts(
-  `
-  InitializationError
-  TimeoutExceededError
-`,
-  enumerate.Prefix('Timeout|')
-);
-
 /**
  * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
@@ -30,6 +22,7 @@ class Timeout extends ExtendablePromise {
   constructor(timeout) {
     if (!Number.isInteger(timeout) || timeout <= 0) {
       const error = new Error('Timeout value must be a positive integer');
+      // eslint-disable-next-line no-use-before-define
       error.name = ERRORS.InitializationError;
       throw error;
     }
@@ -37,6 +30,7 @@ class Timeout extends ExtendablePromise {
     super((...[, reject]) => {
       this[ø.id] = /** @type {number} */ setTimeout(() => {
         const error = new Error('Operation timeout exceeded');
+        // eslint-disable-next-line no-use-before-define
         error.name = ERRORS.TimeoutExceededError;
         reject(error);
       }, timeout);
@@ -45,7 +39,7 @@ class Timeout extends ExtendablePromise {
 
   // eslint-disable-next-line class-methods-use-this
   get [Symbol.toStringTag]() {
-    return 'Timeout';
+    return Timeout.name;
   }
 
   /**
@@ -72,6 +66,19 @@ class Timeout extends ExtendablePromise {
     return this;
   }
 }
+
+/**
+ * Remove prefix for typescript to make error names overridable
+ * @type {import("@js-bits/enumerate/types/types").EnumType<"InitializationError TimeoutExceededError", StringConstructor>}
+ */
+// @ts-expect-error ts(2322)
+const ERRORS = enumerate.ts(
+  `
+  InitializationError
+  TimeoutExceededError
+`,
+  enumerate.Prefix(`${Timeout.name}|`)
+);
 
 // Assigning properties one by one helps typescript to declare the namespace properly
 Timeout.InitializationError = ERRORS.InitializationError;
