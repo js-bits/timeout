@@ -20,7 +20,7 @@ describe('Timeout', () => {
     test('should throw TimeoutInitializationError when timeout is undefined', () => {
       expect.assertions(2);
       expectInitError(() => {
-        // @ts-expect-error Expected 1 arguments, but got 0
+        // @ts-expect-error ts(2554)
         new Timeout();
       });
     });
@@ -28,13 +28,14 @@ describe('Timeout', () => {
     test('should throw TimeoutInitializationError when timeout is null', async () => {
       expect.assertions(2);
       expectInitError(() => {
+        // @ts-expect-error ts(2345)
         new Timeout(null);
       });
     });
     test('should throw TimeoutInitializationError when timeout is a number', async () => {
       expect.assertions(2);
       expectInitError(() => {
-        // @ts-expect-error Argument of type 'string' is not assignable to parameter of type 'number'.
+        // @ts-expect-error ts(2345)
         new Timeout('3000');
       });
     });

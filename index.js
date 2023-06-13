@@ -10,7 +10,7 @@ const ø = enumerate.ts(`
 /**
  * Rejects the promise with an error if it does not settle within a specified timeout
  * @class
- * @extends {ExtendablePromise<undefined>}
+ * @extends {ExtendablePromise<void>}
  */
 class Timeout extends ExtendablePromise {
   /**
